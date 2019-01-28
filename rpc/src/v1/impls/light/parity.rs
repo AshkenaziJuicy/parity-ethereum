@@ -24,6 +24,7 @@ use crypto::DEFAULT_MAC;
 use ethkey::{crypto::ecies, Brain, Generator};
 use ethstore::random_phrase;
 use sync::LightSyncProvider;
+use updater::VersionInfo as UpdaterVersionInfo;
 use ethcore::account_provider::AccountProvider;
 use ethcore_logger::RotatingLogger;
 
@@ -338,7 +339,7 @@ impl Parity for ParityClient {
 	}
 
 	fn version_info(&self) -> Result<VersionInfo> {
-		Err(errors::light_unimplemented(None))
+		Ok(UpdaterVersionInfo::this().into())
 	}
 
 	fn releases_info(&self) -> Result<Option<OperationsInfo>> {
