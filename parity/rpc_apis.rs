@@ -641,7 +641,7 @@ impl<C: LightChainClient + 'static> LightDependencies<C> {
 						.extend_with(ParityAccountsClient::new(&self.secret_store).to_delegate());
 				}
 				Api::ParitySet => handler.extend_with(
-					light::ParitySetClient::new(self.sync.clone(), self.fetch.clone())
+					light::ParitySetClient::new(self.client.clone(), self.sync.clone(), self.fetch.clone())
 						.to_delegate(),
 				),
 				Api::Traces => handler.extend_with(light::TracesClient.to_delegate()),
