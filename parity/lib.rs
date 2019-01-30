@@ -181,7 +181,7 @@ pub enum ExecutionAction {
 }
 
 fn execute<Cr, Rr>(command: Execute, on_client_rq: Cr, on_updater_rq: Rr) -> Result<ExecutionAction, String>
-	where Cr: Fn(String) + 'static + Send,
+	where Cr: Fn(String) -> Result<(), ()> + 'static + Send,
 		  Rr: Fn() + 'static + Send
 {
 	// TODO: move this to `main()` and expose in the C API so that users can setup logging the way
@@ -222,7 +222,7 @@ fn execute<Cr, Rr>(command: Execute, on_client_rq: Cr, on_updater_rq: Rr) -> Res
 ///
 /// On error, returns what to print on stderr.
 pub fn start<Cr, Rr>(conf: Configuration, on_client_rq: Cr, on_updater_rq: Rr) -> Result<ExecutionAction, String>
-	where Cr: Fn(String) + 'static + Send,
+	where Cr: Fn(String) -> Result<(), ()> + 'static + Send,
 			Rr: Fn() + 'static + Send
 {
 	let deprecated = find_deprecated(&conf.args);
